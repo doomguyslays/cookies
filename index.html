@@ -1,92 +1,28 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Cookie Clicker Game</title>
-</head>
-<body>
-</body>
+  <head>
+    <title>Cookie Clicker Game</title>
+  </head>
+  <body>
+    <h1>Cookie Clicker Game</h1>
+    <div id="cookie-container">
+      <img src="cookie.png" id="cookie" onclick="clickCookie()">
+      <div id="cookie-count">0</div>
+    </div>
+    <script src="game.js"></script>
+  </body>
 </html>
 
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Cookie Clicker Game</title>
-</head>
-<body>
-  <h1>Cookie Clicker Game</h1>
-  <button id="cookie">Click me!</button>
-</body>
-</html>
+var cookie = document.getElementById("cookie");
+var cookieCount = document.getElementById("cookie-count");
+var cookies = 0;
 
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Cookie Clicker Game</title>
-</head>
-<body>
-  <h1>Cookie Clicker Game</h1>
-  <button id="cookie">Click me!</button>
-  <p>Score: <span id="score">0</span></p>
-</body>
-</html>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Cookie Clicker Game</title>
-</head>
-<body>
-  <h1>Cookie Clicker Game</h1>
-  <button id="cookie">Click me!</button>
-  <p>Score: <span id="score">0</span></p>
-  <script>
-    const cookie = document.getElementById("cookie");
-    const score = document.getElementById("score");
-    let count = 0;
-    cookie.addEventListener("click", () => {
-      count++;
-      score.innerText = count;
-    });
-  </script>
-</body>
-	<!DOCTYPE html>
-<html>
-<head>
-  <title>Cookie Clicker Game</title>
-</head>
-<body>
-  <h1>Cookie Clicker Game</h1>
-  <button id="cookie">Click me!</button>
-  <p>Score: <span id="score">0</span></p>
-  <p>Upgrades:</p>
-  <ul id="upgrades">
-    <li><button id="upgrade1">Upgrade 1 (10)</button></li>
-    <li><button id="upgrade2">Upgrade 2 (50)</button></li>
-    <li><button id="upgrade3">Upgrade 3 (100)</button></li>
-  </ul>
-  <script>
-    const cookie = document.getElementById("cookie");
-    const score = document.getElementById("score");
-    let count = 0;
-    let upgrade1 = false;
-    let upgrade2 = false;
-    let upgrade3 = false;
-    const upgrade1Button = document.getElementById("upgrade1");
-    const upgrade2Button = document.getElementById("upgrade2");
-    const upgrade3Button = document.getElementById("upgrade3");
-    const upgrades = document.getElementById("upgrades");
-    cookie.addEventListener("click", () => {
-      count++;
-      if (upgrade1) {
-        count++;
-      }
-      if (upgrade2) {
-        count += 2;
-      }
-      if (upgrade3) {
-        count += 5;
-      }
-      score.innerText = count;
-    });
-    upgrade1
+function clickCookie() {
+  cookies++;
+  cookieCount.innerHTML = cookies;
+}
 
-</html>
+setInterval(function() {
+  cookies += 10; // Increment cookies per second
+  cookieCount.innerHTML = cookies;
+}, 1000); // Update every second
