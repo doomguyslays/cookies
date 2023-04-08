@@ -1,89 +1,132 @@
-<html>
-    <body>
-      <div id="save">click to save</div>
-      <div class="noselect">
-    <div id="cookie">0</div></p> <div id = "chip"></div>
-  
-   <div id = "chip2"></div>
-   <div id = "chip3"></div>
-   <div id = "chip4"></div></div>
-  <h1>CPC=COOKIES PER CLICK</H1>
-   
-     
-  
-   
-   
-   
-  <br>
-    <table>
-        <tr>
-            <td>Name</td>
-            <td>how many cookies can it make?</td>
-          <td></td>
-          <td>cost</td>
-        </tr>
-    
-   <tr>   
-   
-     <td><button id ="click" >Buy</button></td>  <td>Granny!</td>
-    <td><a href="#popup">Click for more info</a>
-<div id="popup" class="overlay">
-	<div class="popup"><h2>GRANNY UPGRADE STATISTICS</h2>
-		<a class="close"href="#">&#10060</a>
-		<div class="content">
-			Grannys add 1 more to your CPC!
-		</div>	</div></div></td></div>
-            <td>100 cookies!</td>
-        </tr>
-      <td><input type = "button" value="buy"id ="click2"></td>
-      <td>Pig Workers</td>
-      <td><a href="#popup2">Click for more info</a>
-<div id="popup2" class="overlay">
-	<div class="popup"><h2>PIG WORKER UPGRADE STATISTICS</h2>
-		<a class="close"href="#">&#10060</a>
-		<div class="content">
-			Pig Workers add 15 more to your CPC!
-		</div>	</div></div></td>
-            <td>500 cookies!</td>
-      <tr>
-        <td><input type = "button"   value="buy"id="click3"></td>
-        <td>Factory</td>
-            <td><a href="#popup3">Click for more info</a>
-<div id="popup3" class="overlay">
-	<div class="popup"><h2>FACTORY UPGRADE STATISTICS</h2>
-		<a class="close"href="#">&#10060</a>
-		<div class="content">
-Factorys add 175 more to your CPC!
-		</div>	</div></div></td>
-            <td>1,000 cookies!</td>
-        </tr>
-        <tr>
-          <td><input type = "button"   value="buy" id="click4"/></td>
-          <td>Portal</td>
-            <td> <a href="#popup4">Click for more info</a>
-<div id="popup4" class="overlay">
-	<div class="popup"><h2>PORTAL UPGRADE STATISTICS</h2>
-		<a class="close"href="#">&#10060</a>
-		<div class="content">
-Portal add 350 more to your CPC!
-		</div>	</div></div></td>
-            <td>100,000 cookies!</td>
-        </tr>
-         <tr>
-           <td><input type = "button"   value="buy"id="click5"/></td>
-           <td>SuperPortal</td>
-            <td><a href="#popup5">Click for more info</a>
-<div id="popup5" class="overlay">
-	<div class="popup"><h2>SUPERPORTAL UPGRADE STATISTICS</h2>
-		<a class="close"href="#">&#10060</a>
-		<div class="content">
-SuperPortal adds 800 more to your CPC!
-		</div>	</div></div></td>
-            <td>1,000,000 cookies!</td>
-        </tr>
-        
-    </table>
-     <div id = "numbers"></div>
 
-</div>
-</html>
+ $('#save').on('click', function(){
+
+    $('input[type="text"]').each(function(){    
+        var id = $(this).attr('cooke');
+        var value = $(this).val();
+       localStorage.setItem(id, value);
+
+    });   
+});
+
+$('#load').on('click', function(){
+    $('input[type="text"]').each(function(){    
+        var id = $(this).attr('id');
+        var value = localStorage.getItem(id);
+
+        $(this).val(value);
+
+    }); 
+});
+           
+var app = {
+  cookiesPerClick: 1,
+  
+  cursors: [
+    {},
+    {
+      cookiesPerSecond: 1,
+      
+    },
+    {
+      cookiesPerSecond: 2,
+     
+    },
+    {
+   
+      cookiesPerSecond: 75,
+      
+    }
+  ],
+ 
+  cookies: function(value)
+  {
+    var cookie = document.getElementById('cookie');
+    
+    if(typeof value === 'undefined')
+      return parseInt(cookie.textContent);
+    
+    var newValue = app.cookies() + value;
+    
+    if(newValue < 0)
+      throw new Error('Pas assez de stock pour enlever ' + Math.abs(value) + ' cookies !');
+    
+    cookie.textContent = newValue;
+  },
+  
+  /**
+   * lance le jeu
+   */
+  run: function()
+  {
+    // le cookie !
+    document.getElementById('cookie').addEventListener('click', function(){
+      app.cookies(app.cookiesPerClick);
+    }, false);
+    
+   
+    document.getElementById('click').addEventListener('click', function(){
+      try
+      {
+        app.cookies(-100);
+        app.cookiesPerClick += 1;
+      
+      }
+      
+      
+      
+      catch(e)
+      {}
+    }, false),
+      document.getElementById('click2').addEventListener('click', function(){
+      try
+      {
+        app.cookies(-500);
+        app.cookiesPerClick += 15;
+      }
+      catch(e)
+      {}
+    }, false)
+    document.getElementById('click3').addEventListener('click', function(){
+      try
+      {
+        app.cookies(-1000);
+        app.cookiesPerClick += 175;
+      }
+      catch(e)
+      {}
+    }, false);
+   
+  document.getElementById('click4').addEventListener('click', function(){
+      try
+      {
+        app.cookies(-100000);
+        app.cookiesPerClick += 350;
+      }
+      catch(e)
+      {}
+    }, false);
+    document.getElementById('click5').addEventListener('click', function(){
+      try
+      {
+        app.cookies(-100000);
+        app.cookiesPerClick += 800;
+      }
+      catch(e)
+      {}
+    }, false);
+      for(var i = 1, c = app.cursors.length; i < c; ++i)
+    {
+      document.getElementById('cursor' + i).addEventListener('click', function(){
+        try
+        {
+          app.cookies(-1 * app.cursors[i].cost);
+          app.cursors[i].nbCursors++;
+        }
+        catch(e)
+        {}
+      }, false);
+    }
+   setInterval(function(){      for(var i = 1, c = app.cursors.length; i < c; ++i)        app.cookies(app.cursors[i].cookiesPerSecond * app.cursors[i].nbCursors);    }, 1000000);  }};
+app.run();
+
